@@ -1,0 +1,7 @@
+[project]
+org-name = "abilashini"
+version = "1.0-SNAPSHOT"
+authors = ["Abilashini"]
+repository = "https://github.com/Abilashini/regex"
+keywords = ["regex", "pattern", "match"]
+license = "Apache-2.0"
