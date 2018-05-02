@@ -20,6 +20,7 @@ package org.ballerinalang.test.regex;
 import org.ballerinalang.launcher.util.BCompileUtil;
 import org.ballerinalang.launcher.util.BRunUtil;
 import org.ballerinalang.launcher.util.CompileResult;
+import org.ballerinalang.model.values.BString;
 import org.ballerinalang.model.values.BValue;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -37,14 +38,58 @@ public class BallerinaRegexTest {
     }
 
     @Test
-    public void testRegex() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testRegex");
+    public void testRegexForAlphabeticValues() {
+        BValue[] input = {new BString("Hello")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForAlphabeticValues", input);
         Assert.assertTrue(new Boolean(returns[0].toString()));
     }
 
     @Test
-    public void testRegexFalseCase() {
-        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexFalseCase");
+    public void testRegexForAlphabeticValuesFalseCase() {
+        BValue[] input = {new BString("Hello123")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForAlphabeticValues", input);
+        Assert.assertFalse(new Boolean(returns[0].toString()));
+    }
+
+    @Test
+    public void testRegexForAlphaNumericValues() {
+        BValue[] input = {new BString("hello123")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForAlphaNumericValues", input);
+        Assert.assertTrue(new Boolean(returns[0].toString()));
+    }
+
+    @Test
+    public void testRegexForAlphaNumericValuesFalseCase() {
+        BValue[] input = {new BString("hello_123")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForAlphaNumericValues", input);
+        Assert.assertFalse(new Boolean(returns[0].toString()));
+    }
+
+    @Test
+    public void testRegexforNumericValues() {
+        BValue[] input = {new BString("2.4")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForNumericValues", input);
+        Assert.assertTrue(new Boolean(returns[0].toString()));
+    }
+
+    @Test
+    public void testRegexforNumericValuesFalseCase() {
+        BValue[] input = {new BString("$2.4")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForNumericValues", input);
+        Assert.assertFalse(new Boolean(returns[0].toString()));
+    }
+
+    @Test
+    public void testRegexForSpecialCharacters() {
+        BValue[] input = {new BString("*")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForSpecialCharacters", input);
+        Assert.assertTrue(new Boolean(returns[0].toString()));
+    }
+
+    @Test
+    public void testRegexForSpecialCharactersFalseCase() {
+        BValue[] input = {new BString("a")};
+        BValue[] returns = BRunUtil.invoke(compileResult, "testRegexForSpecialCharacters", input);
         Assert.assertFalse(new Boolean(returns[0].toString()));
     }
 }
